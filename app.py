@@ -20,10 +20,18 @@ if __name__ == "__main__":
     
         # if we didn't authenticate yet, do it 
         if "api" not in st.session_state:    
+
             st.session_state.api = authenticate(st.secrets["consumer_key"],
                                             st.secrets["consumer_secret"],
                                             st.secrets["access_token_key"],
                                             st.secrets["access_token_secret"])
+                                            
+            st.session_state.api = authenticate(st.secrets["consumer_key"],
+                                            st.secrets["consumer_secret"],
+                                            st.secrets["access_token_key"],
+                                            st.secrets["access_token_secret"])
+
+        
         
         # try getting the tweets; if the username is incorrect, display the except message     
         try:
@@ -32,7 +40,7 @@ if __name__ == "__main__":
             # check that the user has tweeted at least ten times, 
             # if not display the except message 
             try:
-                cat = outtweets[9]  
+                cat = outtweets[1]  
             
                 # display loading sign whie making the wordcould
                 st.spinner()
@@ -42,7 +50,7 @@ if __name__ == "__main__":
                     st.balloons()
                 
             except:
-                st.markdown("This account has fewer than 10 tweets. Tweet more and come back later or try again.")  
+                st.markdown("This account has fewer than 2 tweets. Tweet more and come back later or try again.")  
             
         except:
             st.markdown("This account doesn't exist. Please try again.")        

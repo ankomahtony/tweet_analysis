@@ -2,10 +2,10 @@ from telnetlib import AUTHENTICATION
 import matplotlib.pyplot as plt 
 import tweepy
 import re
-from wordcloud import WordCloud, ImageColorGenerator
+from wordcloud import WordCloud
 import numpy as np
-from os import path
-from PIL import Image
+# from os import path
+# from PIL import Image
 
 # Twitter Authentication scripts
 def authenticate(consumer_key, consumer_secret,access_token_key, access_token_secret):    
@@ -34,7 +34,7 @@ def preprocess(out):
     text = re.sub(pattern=r"@\S+",repl="",string=text)
     return text
 
-twitter_mask = np.array(Image.open("twitter.png"))
+# twitter_mask = np.array(Image.open("twitter.png"))
 
 
 def make_wordcloud(st_words, out):
@@ -43,11 +43,11 @@ def make_wordcloud(st_words, out):
                         max_font_size=250, max_words=400,
                         colormap='rainbow', collocations=True).generate(text)  
 
-    image_colors = ImageColorGenerator(twitter_mask)
+    # image_colors = ImageColorGenerator(twitter_mask)
 
     fig = plt.figure(figsize=(20,10), facecolor='k')
     # plt.imshow(wordcloud.recolor(color_func=image_colors), interpolation="bilinear")
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
-    plt.savefig('twitter3.png', format="png")
+    # plt.savefig('twitter3.png', format="png")
     return fig

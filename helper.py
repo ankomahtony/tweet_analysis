@@ -23,7 +23,7 @@ nltk.download('vader_lexicon')
 def authenticate(consumer_key, consumer_secret,access_token_key, access_token_secret):    
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token_key, access_token_secret)
-    api = tweepy.API(auth)
+    api = tweepy.API(auth,wait_on_rate_limit=True)
     return api
 
 def get_user_tweeets(screen_name,api):
@@ -167,14 +167,14 @@ def create_pie_chart(data, names):
     plt.pie(data, labels=names)
     p=plt.gcf()
     p.gca().add_artist(my_circle)
-    return plt
+    return plt.show
     
 
 def make_wordcloud(out):
     stopwords = set(STOPWORDS)
     wordcloud = WordCloud(width=1000, height=500,stopwords=stopwords,
-                        max_font_size=250, max_words=100,repeat=True,
-                        colormap='rainbow', collocations=True).generate(out)  
+                        max_font_size=250, max_words=1000,
+                        colormap='Set2', collocations=False).generate(out)  
 
     # image_colors = ImageColorGenerator(twitter_mask)
 

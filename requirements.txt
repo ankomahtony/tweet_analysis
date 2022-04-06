@@ -9,3 +9,4 @@ langdetect
 twython
 nltk
 scikit-learn
+streamlit-echarts

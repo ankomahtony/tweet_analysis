@@ -1,7 +1,10 @@
+from textwrap import indent
 import streamlit as st
 import matplotlib.pyplot as plt 
+from streamlit_echarts import st_echarts
 from helper import make_stopwords, authenticate,create_pie_chart, get_user_tweeets,count_values_in_column, make_wordcloud, preprocess, get_tweets
 
+st.set_page_config(layout="wide")
 st.title(" ☁️ Analyse Your Tweets ☁️ ") 
 seleected = st.selectbox('Pick one', ['An Account', 'A Tag'])
 if seleected == "An Account":
@@ -98,12 +101,14 @@ else:
             
             # try getting the tweets; if the username is incorrect, display the except message     
             try:
-                tweets = get_tweets(st.session_state.tag,500, st.session_state.api)
+
+                with st.spinner(text='We\'re getting the tweets. Give it a sec...'):
+                    tw_list = get_tweets(st.session_state.tag,500, st.session_state.api)
             
                 # check that the user has tweeted at least ten times, 
                 # if not display the except message 
                 try:
-                    tw_list = tweets  
+                    # tw = tw_list[4]  
                 
                     # display loading sign whie making the wordcould
                     st.spinner()
@@ -116,10 +121,51 @@ else:
                         # create data for Pie Chart
                         names= ['{} {}%'.format(x,str(round(pc.loc[x,"Percentage"]))) for x in pc.index]
                         data=pc["Percentage"]
+                        pie_data = [{'value':round(pc.loc[x,"Percentage"]), 'name': '{} {}%'.format(x,str(round(pc.loc[x,"Percentage"])))} for x in pc.index ]
                         wordfig = make_wordcloud(str(tw_list["text"].values))
+                        wordfig_neg = make_wordcloud(str(tw_list_negative["text"].values))
+                        wordfig_neu = make_wordcloud(str(tw_list_neutral["text"].values))
+                        wordfig_pos = make_wordcloud(str(tw_list_positive["text"].values))
                         st.pyplot(wordfig)
-                        piefig = create_pie_chart(data,names)
-                        st.pyplot(piefig)
+                        # piefig = create_pie_chart(data,names)
+                        # st.pyplot(piefig)
+
+                        option = {
+                            "legend": {"top": "bottom"},
+                            "toolbox": {
+                                "show": True,
+                                "feature": {
+                                    "mark": {"show": True},
+                                    "dataView": {"show": True, "readOnly": False},
+                                    "restore": {"show": True},
+                                    "saveAsImage": {"show": True},
+                                },
+                            },
+                            "series": [
+                                {
+                                    "name": "Percentage of Sentiments",
+                                    "type": "pie",
+                                    "radius": [50, 250],
+                                    "center": ["50%", "50%"],
+                                    "roseType": "area",
+                                    "itemStyle": {"borderRadius": 8},
+                                    "data": pie_data,
+                                }
+                            ],
+                        }
+                        st_echarts(
+                            options=option, height="600px",
+                        )
+
+                        # st.write(pie_data)
+                        # st.write(piefig)
+
+
+                        col1, col2, col3 = st.columns(3)
+
+                        col1.pyplot(wordfig_neg)
+                        col2.pyplot(wordfig_neu)
+                        col3.pyplot(wordfig_pos)
                         st.balloons()
                         
                     

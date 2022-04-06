@@ -3,3 +3,9 @@ matplotlib
 tweepy
 regex
 wordcloud
+textblob
+pycountry
+langdetect
+twython
+nltk
+scikit-learn

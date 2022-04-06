@@ -5,10 +5,10 @@ from streamlit_echarts import st_echarts
 from helper import make_stopwords, authenticate,create_pie_chart, get_user_tweeets,count_values_in_column, make_wordcloud, preprocess, get_tweets
 
 st.set_page_config(layout="wide")
-st.title(" ☁️ Analyse Your Tweets ☁️ ") 
+st.title(" 🐦 Analyse Your Tweets 🐦 ") 
 seleected = st.selectbox('Pick one', ['An Account', 'A Tag'])
 if seleected == "An Account":
-    st.subheader("Create a wordcloud out of your last 200 tweets!")
+    st.subheader("Create a wordcloud out of your recents tweets!")
     st.text_input("Enter a twitter username to begin", key="name")
 
     if __name__ == "__main__":
@@ -72,7 +72,7 @@ if seleected == "An Account":
                 st.markdown("This account doesn't exist. Please try again.")  
 
 else:
-    st.subheader("Analyse your Twitter Tag")
+    st.subheader("Analyse 500 recent tweets on a Tag")
     st.text_input("Enter a twitter tag to begin", key="tag")  
 
     if __name__ == "__main__":

@@ -126,9 +126,13 @@ else:
                         wordfig_neg = make_wordcloud(str(tw_list_negative["text"].values))
                         wordfig_neu = make_wordcloud(str(tw_list_neutral["text"].values))
                         wordfig_pos = make_wordcloud(str(tw_list_positive["text"].values))
+                         
+                        st.subheader("Overall Wordcloud")
                         st.pyplot(wordfig)
                         # piefig = create_pie_chart(data,names)
                         # st.pyplot(piefig)
+                        
+                        st.subheader("Percentage of Sentiments")
 
                         option = {
                             "legend": {"top": "bottom"},
@@ -145,7 +149,7 @@ else:
                                 {
                                     "name": "Percentage of Sentiments",
                                     "type": "pie",
-                                    "radius": [50, 250],
+                                    "radius": [50, 100],
                                     "center": ["50%", "50%"],
                                     "roseType": "area",
                                     "itemStyle": {"borderRadius": 8},
@@ -163,8 +167,11 @@ else:
 
                         col1, col2, col3 = st.columns(3)
 
+                        col1.write('Negative Wordcloud')
                         col1.pyplot(wordfig_neg)
+                        col2.write('Neutral Wordcloud')
                         col2.pyplot(wordfig_neu)
+                        col3.write('Positive Wordcloud')
                         col3.pyplot(wordfig_pos)
                         st.balloons()
                         
